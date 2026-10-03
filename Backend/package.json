@@ -1,0 +1,11 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "This is the backend created for the portfolio. This will contain all the porject and other details, which can be updated and hence changed directly from backend, instead of changing front-end code."
+}
