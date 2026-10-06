@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "description": "This is the backend created for the portfolio. This will contain all the porject and other details, which can be updated and hence changed directly from backend, instead of changing front-end code."
+  "description": "This is the backend created for the portfolio. This will contain all the porject and other details, which can be updated and hence changed directly from backend, instead of changing front-end code.",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }
