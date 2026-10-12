@@ -9,8 +9,7 @@ export const getProjects = async (req, res) => {
     res.status(200).json({
         success: true,
         data: projects,
-        count: projects.length,
-
+        count: projects.length
     })
 }
 
