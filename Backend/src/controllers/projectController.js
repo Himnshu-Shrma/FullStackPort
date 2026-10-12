@@ -1,7 +1,7 @@
 import { getAllProjects, getProjectById, createProject, updateProject, deleteProject } from '../services/projectService.js';
 
-export const getProjects = (req, res) => {
-    const projects = getAllProjects();
+export const getProjects = async (req, res) => {
+    const projects = await getAllProjects();
     if (!projects) {
         return res.status(404).json({ success: false, message: 'No projects found' });
     }
@@ -14,7 +14,7 @@ export const getProjects = (req, res) => {
     })
 }
 
-export const getProject = (req, res) => {
+export const getProject = async (req, res) => {
     const id = parseInt(req.params.id);
 
     if (!Number.isSafeInteger(id) || id <= 0) {
@@ -24,7 +24,7 @@ export const getProject = (req, res) => {
         });
     }
 
-    const project = getProjectById(id);
+    const project = await getProjectById(id);
     if (!project) {
         return res.status(404).json({ success: false, message: 'Project not found' });
     }
@@ -36,7 +36,7 @@ export const getProject = (req, res) => {
     })
 }
 
-export const addProject = (req, res) => {
+export const addProject = async (req, res) => {
     const { title, description, technologies, githubUrl, liveUrl } = req.body;
     if (
         typeof title !== 'string' || !title.trim() ||
@@ -48,8 +48,7 @@ export const addProject = (req, res) => {
             message: 'Title, description, and technologies are required'
         });
     }
-    const newProject = createProject({
-        id: projects.length + 1,
+    const newProject = await createProject({
         title,
         description,
         technologies,
@@ -62,7 +61,7 @@ export const addProject = (req, res) => {
     });
 }
 
-export const editProject = (req, res) => {
+export const editProject = async (req, res) => {
     const id = Number(req.params.id);
 
     if (!Number.isSafeInteger(id) || id <= 0) {
@@ -122,7 +121,7 @@ export const editProject = (req, res) => {
         updates.description = updates.description.trim();
     }
 
-    const project = updateProject(id, updates);
+    const project = await updateProject(id, updates);
 
     if (!project) {
         return res.status(404).json({
@@ -137,17 +136,17 @@ export const editProject = (req, res) => {
     });
 }
 
-export const removeProject = (req, res) => {
+export const removeProject = async (req, res) => {
     const id = Number(req.params.id);
-
-    if (!Number.isSafeInteger(id) || id <= 0) {
+    console.log('Project ID:', req.params.id);
+    if (!id=== 'string'){
         return res.status(400).json({
             success: false,
-            message: 'Project ID must be a positive integer'
+            message: 'Project ID not found'
         });
     }
 
-    const project = deleteProject(id);
+    const project = await deleteProject(id);
 
     if (!project) {
         return res.status(404).json({

@@ -12,7 +12,9 @@
   "description": "This is the backend created for the portfolio. This will contain all the porject and other details, which can be updated and hence changed directly from backend, instead of changing front-end code.",
   "type": "module",
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.11.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

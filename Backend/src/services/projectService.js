@@ -1,21 +1,15 @@
-import projects from '../data/projects.js';
-
+import Project from '../models/Project.js';
 export const getAllProjects = () => {
-    return projects;
+    return Project.find().sort({ createdAt: -1 });
 }
 
 export const getProjectById = (id) => {
-    return projects.find((project) => project.id === id);
-};
+    return Project.findById(id);
+}
 
 export const createProject = (projectData) => {
-    const newProject = {
-        ...projectData
-    };
-
-    projects.push(newProject);
-
-    return newProject;
+    const newProject = new Project(projectData);
+    return newProject.save();
 };
 
 
@@ -25,20 +19,19 @@ export const updateProject = (id, updates) => {
     if (!project) {
         return null;
     }
-
-    Object.assign(project, updates);
-
-    return project;
+    return Project.findByIdAndUpdate(id, updates, { new: true, runValidators: true })
 };
 
 export const deleteProject = (id) => {
-    const projectIndex = projects.findIndex((project) => project.id === id);
-
-    if (projectIndex === -1) {
+    const project = getProjectById(id);
+    console.log('project:', project);
+    if (!project) {
         return null;
     }
 
-    const [deletedProject] = projects.splice(projectIndex, 1);
+    return Project.findByIdAndDelete();
 
-    return deletedProject;
+    // const [deletedProject] = projects.splice(projectIndex, 1);
+
+    // return deletedProject;
 };
