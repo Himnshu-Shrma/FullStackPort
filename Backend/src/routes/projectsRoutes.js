@@ -1,5 +1,7 @@
 
 import express from 'express';
+import validate from '../middlewares/validate.js';
+import { projectCreationSchema, projectIdSchema, projectUpdationSchema} from '../validators/projectValidators.js';
 
 import {
     getProjects,
@@ -12,9 +14,17 @@ import {
 const projectsRoutes = express.Router();
 
 projectsRoutes.get('/', getProjects);
-projectsRoutes.get('/:id', getProject);
-projectsRoutes.post('/', addProject);
-projectsRoutes.patch('/:id', editProject);
-projectsRoutes.delete('/:id', removeProject);
+projectsRoutes.get('/:id', validate(projectIdSchema, 'params'), getProject);
+projectsRoutes.post('/', validate(projectCreationSchema), addProject);
+projectsRoutes.patch('/:id',validate(projectIdSchema, 'params'), validate(projectUpdationSchema), editProject);
+projectsRoutes.delete('/:id',validate(projectIdSchema, 'params'), removeProject);
 
 export default projectsRoutes;
+
+// Notice the order for PATCH:
+
+// Validate the ID.
+
+// Validate the body.
+
+// Run the controller.

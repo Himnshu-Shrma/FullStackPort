@@ -1,14 +1,41 @@
 
 const errorHandler = (err, req, res, next) => {
-    console.error(err);
 
     if (res.headersSent) {
         return next(err);
     }
 
-    res.status(500).json({
+    if (err.name === 'ValidationError') {
+        return res.status(400).json({
+            success: false,
+            message: 'Database validation failed'
+        })
+    }
+
+
+    if (err.name === 'CastError') {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid resource Id or value'
+        })
+    }
+
+    // MongoDB duplicate-key error
+    if (err.code === 11000) {
+        return res.status(409).json({
+            success: false,
+            message: 'A record with this value already exists'
+        });
+    }
+
+    const statusCode = err.statusCode || 500;
+
+    res.status(statusCode).json({
         success: false,
-        message: 'Internal server error'
+        message:
+            statusCode < 500
+                ? err.message
+                : 'Internal server error'
     });
 };
 

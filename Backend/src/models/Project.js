@@ -14,6 +14,11 @@ const projectSchema = new mongoose.Schema(
             trim: true
         },
 
+        keyPoints: {
+            type: [String],
+            required: true
+        },
+
         technologies: {
             type: [String],
             required: true
