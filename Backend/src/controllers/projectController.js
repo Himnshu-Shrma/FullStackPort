@@ -107,7 +107,7 @@ export const editProject = async (req, res) => {
     //     updates.description = updates.description.trim();
     // }
 
-    const project = await updateProject(req.params.id, updates);
+    const project = await updateProject(req.params.id, req.body);
 
     if (!project) {
         return res.status(404).json({

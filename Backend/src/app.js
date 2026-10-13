@@ -3,12 +3,19 @@ import express from 'express';
 import projectsRoutes from './routes/projectsRoutes.js';
 import requestLogger from './middlewares/requestLogger.js';
 import errorHandler from './middlewares/errorHandler.js';
+import authRoutes from './routes/authRoutes.js';
+import sessionConfig from './config/session.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(requestLogger);
+
+// Must be registered before routes that read req.session.
+app.use(sessionConfig);
 
 // Routes
 app.get('/health', (req, res) => {
@@ -18,6 +25,7 @@ app.get('/health', (req, res) => {
     });
 });
 
+app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectsRoutes);
 
 // Handle unknown endpoints

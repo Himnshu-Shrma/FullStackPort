@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "seed:admin": "node src/scripts/createAdmin.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,8 +13,11 @@
   "description": "This is the backend created for the portfolio. This will contain all the porject and other details, which can be updated and hence changed directly from backend, instead of changing front-end code.",
   "type": "module",
   "dependencies": {
+    "@node-rs/argon2": "^2.2.2",
+    "connect-mongo": "^6.0.0",
     "dotenv": "^18.0.6",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "mongoose": "^9.11.0",
     "zod": "^4.6.6"
   },

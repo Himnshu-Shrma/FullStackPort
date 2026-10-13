@@ -2,7 +2,7 @@
 import express from 'express';
 import validate from '../middlewares/validate.js';
 import { projectCreationSchema, projectIdSchema, projectUpdationSchema} from '../validators/projectValidators.js';
-
+import requireAdmin from '../middlewares/requireAdmin.js';
 import {
     getProjects,
     getProject,
@@ -15,9 +15,9 @@ const projectsRoutes = express.Router();
 
 projectsRoutes.get('/', getProjects);
 projectsRoutes.get('/:id', validate(projectIdSchema, 'params'), getProject);
-projectsRoutes.post('/', validate(projectCreationSchema), addProject);
-projectsRoutes.patch('/:id',validate(projectIdSchema, 'params'), validate(projectUpdationSchema), editProject);
-projectsRoutes.delete('/:id',validate(projectIdSchema, 'params'), removeProject);
+projectsRoutes.post('/',requireAdmin, validate(projectCreationSchema), addProject);
+projectsRoutes.patch('/:id',requireAdmin, validate(projectIdSchema, 'params'), validate(projectUpdationSchema), editProject);
+projectsRoutes.delete('/:id',requireAdmin, validate(projectIdSchema, 'params'), removeProject);
 
 export default projectsRoutes;
 
